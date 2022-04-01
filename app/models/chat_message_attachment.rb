@@ -1,0 +1,2 @@
+class ChatMessageAttachment < ApplicationRecord
+end
