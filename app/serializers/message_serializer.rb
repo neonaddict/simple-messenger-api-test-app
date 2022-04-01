@@ -1,7 +1,7 @@
 class MessageSerializer < ActiveModel::Serializer
-  attributes :id, :content, :created_at, :user
+  attributes :id, :content, :created_at
 
-  def user
+  attribute :user do
     UserSerializer.new(object.user)
   end
 end
