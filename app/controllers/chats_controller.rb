@@ -8,7 +8,7 @@ class ChatsController < ApplicationController
     render json: {
       chats:
         ActiveModel::Serializer::CollectionSerializer.new(
-          @chats, serializer: ChatSerializer
+          @chats, serializer: ChatSerializer, user_id: @current_user.id
         ),
       info: {
         page: @pagy.page,
