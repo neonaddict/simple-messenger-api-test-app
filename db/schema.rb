@@ -38,6 +38,8 @@ ActiveRecord::Schema.define(version: 2022_04_01_105257) do
   create_table "chat_users", force: :cascade do |t|
     t.bigint "chat_id"
     t.bigint "user_id"
+    t.boolean "creator"
+    t.boolean "admin"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["chat_id"], name: "index_chat_users_on_chat_id"
@@ -46,10 +48,8 @@ ActiveRecord::Schema.define(version: 2022_04_01_105257) do
 
   create_table "chats", force: :cascade do |t|
     t.string "title"
-    t.bigint "creator_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["creator_id"], name: "index_chats_on_creator_id"
   end
 
   create_table "users", force: :cascade do |t|
