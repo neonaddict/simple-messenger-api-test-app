@@ -18,9 +18,12 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @message = Chat::Message.new(create_message_params)
-    @message.user = @current_user
-    @message.chat = @chat
+    @message = Chat::Message.new(
+      create_message_params.merge(
+        user: @current_user,
+        chat: @chat
+      )
+    )
     @message.save!
 
     render json: @message, serializer: MessageSerializer
@@ -62,6 +65,6 @@ class MessagesController < ApplicationController
   end
 
   def update_message_params
-    params.permit(:content)
+    params.permit(:content, read_by: [])
   end
 end
