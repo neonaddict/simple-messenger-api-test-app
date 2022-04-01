@@ -4,8 +4,18 @@ class ChatsController < ApplicationController
 
   def index
     @chats = @current_user.chats
-
-    render json: @chats
+    @pagy, @messages = pagy(@chats, items: 10)
+    render json: {
+      chats:
+        ActiveModel::Serializer::CollectionSerializer.new(
+          @chats, serializer: ChatSerializer
+        ),
+      info: {
+        page: @pagy.page,
+        next: @pagy.next,
+        items: @pagy.items
+      }
+    }
   end
 
   def show

@@ -1,6 +1,21 @@
-class Chats::MessagesController < ApplicationController
+class MessagesController < ApplicationController
   before_action :set_current_user, :set_chat
   before_action :set_message, only: %i[destroy update]
+
+  def index
+    @pagy, @messages = pagy(@chat.messages, items: 10)
+    render json: {
+      messages:
+        ActiveModel::Serializer::CollectionSerializer.new(
+          @messages, serializer: MessageSerializer
+        ),
+      info: {
+        page: @pagy.page,
+        next: @pagy.next,
+        items: @pagy.items
+      }
+    }
+  end
 
   def create
     @message = Chat::Message.new(create_message_params)
@@ -35,7 +50,7 @@ class Chats::MessagesController < ApplicationController
   end
 
   def set_chat
-    @chat = Chat.find(params[:chat_id])
+    @chat = current_user.chats.find(params[:chat_id])
   end
 
   def set_message
