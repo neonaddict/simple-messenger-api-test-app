@@ -1,2 +1,0 @@
-class ChatMessageAttachment < ApplicationRecord
-end
