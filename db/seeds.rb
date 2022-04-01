@@ -23,6 +23,7 @@ chats = (1..10).map do
 end
 
 chats.map do |chat|
+  chat.users << User.find(1)
   chat.users << users.sample(10)
   chat.messages << (1..40).map do
     data = {
